@@ -4,43 +4,40 @@ const nodemailer = require('nodemailer');
 // POST: Save Payment Data
 const savePaymentData = async (req, res) => {
   try {
-    const { cardNumber, cardHolder, expiry, cvv,plan,amount } = req.body;
+    console.log("Received request:", req.body);
 
-    const payment = new Payment({
-      cardNumber,
-      cardHolder,
-      expiry,
-      cvv,
-      plan,
-      amount,
-    });
+    const { cardNumber, cardHolder, expiry, cvv, mail, plan, amount } = req.body;
+    if (!cardNumber || !cardHolder || !expiry || !cvv || !mail || !plan || !amount) {
+      throw new Error("Missing required fields");
+    }
 
+    console.log("Saving payment to database...");
+    const payment = new Payment({ cardNumber, cardHolder, expiry, cvv, plan, amount });
     await payment.save();
 
-    // Send email notification
+    console.log("Sending email...");
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-      auth: {
-        user: 'Pranavjii123@gmail.com', // Replace with your email
-        pass: 'Pranav&123', // Replace with your app password or use environment variables
-      },
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
     });
 
     const mailOptions = {
-      from: 'Pranavjii123@gmail.com',
-      to: mail, // Use 'mail' instead of 'email'
+      from: process.env.EMAIL_USER,
+      to: mail,
       subject: 'Payment Successful',
-      text: `Your payment for the ${plan} plan of $${amount} was successful!`,
+      text: `Your payment for ${plan} was successful!`,
     };
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ message: 'Payment successful and saved to the database' });
+    console.log("Email sent successfully");
+    res.status(200).json({ message: "Payment successful" });
   } catch (error) {
-    console.error('Error processing payment:', error.message);
-    res.status(500).json({ message: 'Error processing payment', error: error.message });
+    console.error("Error in savePaymentData:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 // GET: Retrieve All Payments
 const getAllPayments = async (req, res) => {
