@@ -1,11 +1,12 @@
+// In your backend's routes file (e.g., paymentRoutes.js)
 const express = require('express');
-const router = express.Router();
 const { savePaymentData, getAllPayments } = require('../controllers/paymentController');
+const router = express.Router();
 
-// POST route for saving payment data
-router.post('/api/', savePaymentData);
+// Define the POST route for saving payment data
+router.post('/api/payments', savePaymentData);
 
-// GET route for retrieving all payment data
-router.get('/api/', getAllPayments);
+// Optionally, define the GET route to fetch all payments
+router.get('/api/payments', getAllPayments);
 
 module.exports = router;

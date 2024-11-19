@@ -1,96 +1,128 @@
 import React, { useState } from 'react';
-import './PaymentUi.css';
-import axios from 'axios';
 
 const PaymentUi = () => {
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardHolder, setCardHolder] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvv, setCvv] = useState('');
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    cardHolder: '',
+    expiry: '',
+    cvv: '',
+    plan: '',
+    amount: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentData({ ...paymentData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const paymentData = {
-      cardNumber,
-      cardHolder,
-      expiry,
-      cvv,
-    };
-
     try {
-      const response = await axios.post('http://localhost:5000/api/payments', paymentData);
-      alert(response.data.message);
+      const response = await fetch('http://localhost:5000/api/payments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (response.ok) {
+        alert('Payment successful!');
+        setPaymentData({
+          cardNumber: '',
+          cardHolder: '',
+          expiry: '',
+          cvv: '',
+          plan: '',
+          amount: '',
+        });
+      } else {
+        alert('Payment failed. Please try again.');
+      }
     } catch (error) {
-      alert('Error saving payment: ' + error.message);
+      console.error('Error:', error);
+      alert('Something went wrong.');
     }
   };
 
   return (
-    <div className="payment-main-container">
-      <h2>Enter ATM Card Details</h2>
-      <h3>Pricing Plan:</h3>
-      <div className="pricing-plan">
-        <p><strong>Plan:</strong> Premium Membership</p>
-        <p><strong>Amount:</strong> $49.99 / month</p>
-        <p><strong>Benefits:</strong> Unlimited access to exclusive content, priority support, and more!</p>
-      </div>
-
-      <form className="payment-form" onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label htmlFor="card-number">Card Number</label>
+    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', background: '#f9f9f9' }}>
+      <h2 style={{ textAlign: 'center' }}>Payment Details</h2>
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Card Number</label>
           <input
             type="text"
-            id="card-number"
-            placeholder="xxxx xxxx xxxx xxxx"
-            value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
-            maxLength={19}
+            name="cardNumber"
+            value={paymentData.cardNumber}
+            onChange={handleChange}
             required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
           />
         </div>
-
-        <div className="input-group">
-          <label htmlFor="card-holder">Card Holder Name</label>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Card Holder</label>
           <input
             type="text"
-            id="card-holder"
-            placeholder="John Doe"
-            value={cardHolder}
-            onChange={(e) => setCardHolder(e.target.value)}
+            name="cardHolder"
+            value={paymentData.cardHolder}
+            onChange={handleChange}
             required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
           />
         </div>
-
-        <div className="input-row">
-          <div className="input-group">
-            <label htmlFor="expiry">Expiry Date</label>
-            <input
-              type="text"
-              id="expiry"
-              placeholder="MM/YY"
-              value={expiry}
-              onChange={(e) => setExpiry(e.target.value)}
-              maxLength={5}
-              required
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="cvv">CVV</label>
-            <input
-              type="password"
-              id="cvv"
-              placeholder="xxx"
-              value={cvv}
-              onChange={(e) => setCvv(e.target.value)}
-              maxLength={3}
-              required
-            />
-          </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Expiry (MM/YY)</label>
+          <input
+            type="text"
+            name="expiry"
+            value={paymentData.expiry}
+            onChange={handleChange}
+            required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
+          />
         </div>
-
-        <button type="submit" className="pay-button">Pay Now</button>
+        <div style={{ marginBottom: '15px' }}>
+          <label>CVV</label>
+          <input
+            type="password"
+            name="cvv"
+            value={paymentData.cvv}
+            onChange={handleChange}
+            required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
+          />
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Plan</label>
+          <select
+            name="plan"
+            value={paymentData.plan}
+            onChange={handleChange}
+            required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
+          >
+            <option value="">Select Plan</option>
+            <option value="basic">Basic</option>
+            <option value="premium">Premium</option>
+            <option value="pro">Pro</option>
+          </select>
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Amount</label>
+          <input
+            type="number"
+            name="amount"
+            value={paymentData.amount}
+            onChange={handleChange}
+            required
+            style={{ width: '100%', padding: '10px', margin: '5px 0', border: '1px solid #ccc', borderRadius: '5px' }}
+          />
+        </div>
+        <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#4caf50', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+          Submit Payment
+        </button>
       </form>
     </div>
   );

@@ -6,7 +6,7 @@ const paymentSchema = new mongoose.Schema({
   expiry: String,
   cvv: String,
   plan: String,
-  amount: Number,
+  amount: String,
 });
 
 module.exports = mongoose.model('Payment', paymentSchema);

@@ -26,7 +26,7 @@ app.use('/subjects', subjectRoutes);
 app.use('/opening-text', openingTextRoutes);
 app.use('/letters', letterRoutes);
 app.use('/conclusion', conclusionRoutes);
-app.use('/payments', paymentRoutes);
+app.use(paymentRoutes);
 app.post("/api/auth/register", (req, res) => {
   
     res.send({ message: "User registered successfully" });

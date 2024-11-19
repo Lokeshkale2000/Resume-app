@@ -1,20 +1,18 @@
-// paymentController.js
 const Payment = require('../models/paymentModel');
 const nodemailer = require('nodemailer');
 
 // POST: Save Payment Data
 const savePaymentData = async (req, res) => {
   try {
-    const { cardNumber, cardHolder, expiry, cvv } = req.body;
+    const { cardNumber, cardHolder, expiry, cvv,plan,amount } = req.body;
 
-    // Save payment details to database
     const payment = new Payment({
       cardNumber,
       cardHolder,
       expiry,
       cvv,
-      plan: 'Premium Membership',
-      amount: 49.99,
+      plan,
+      amount,
     });
 
     await payment.save();
@@ -23,22 +21,23 @@ const savePaymentData = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'Pranavjii123@gmail.com',
-        pass: 'Pranav&123',
+        user: 'Pranavjii123@gmail.com', // Replace with your email
+        pass: 'Pranav&123', // Replace with your app password or use environment variables
       },
     });
 
     const mailOptions = {
       from: 'Pranavjii123@gmail.com',
-      to: email,
+      to: mail, // Use 'mail' instead of 'email'
       subject: 'Payment Successful',
-      text: `Your payment for ${payment.plan} was successful!`,
+      text: `Your payment for the ${plan} plan of $${amount} was successful!`,
     };
 
     await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: 'Payment successful and saved to the database' });
   } catch (error) {
+    console.error('Error processing payment:', error.message);
     res.status(500).json({ message: 'Error processing payment', error: error.message });
   }
 };
@@ -49,6 +48,7 @@ const getAllPayments = async (req, res) => {
     const payments = await Payment.find();
     res.status(200).json(payments);
   } catch (error) {
+    console.error('Error retrieving payments:', error.message);
     res.status(500).json({ message: 'Error retrieving payments', error: error.message });
   }
 };
