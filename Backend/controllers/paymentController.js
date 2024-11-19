@@ -7,9 +7,7 @@ const savePaymentData = async (req, res) => {
     console.log("Received request:", req.body);
 
     const { cardNumber, cardHolder, expiry, cvv, mail, plan, amount } = req.body;
-    if (!cardNumber || !cardHolder || !expiry || !cvv || !mail || !plan || !amount) {
-      throw new Error("Missing required fields");
-    }
+  
 
     console.log("Saving payment to database...");
     const payment = new Payment({ cardNumber, cardHolder, expiry, cvv, plan, amount });
