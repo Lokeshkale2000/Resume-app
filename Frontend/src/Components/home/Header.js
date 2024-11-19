@@ -204,7 +204,7 @@ const Header = () => {
                 <div className="tool-item">
                   <img src="download (1).png" alt="Contact" />
                   <div>
-                    <strong>Account Setting</strong>
+                    <strong onClick={() => handleNavigate("/sidenavbr")}>Account Setting</strong>
                     <p>Get in touch with us for any inquiries.</p>
                   </div>
                 </div>

@@ -20,22 +20,6 @@ const Slidenavbar = () => {
           </li>
           <li>
             <NavLink
-              to="/account-settings/subscription"
-              className={({ isActive }) => (isActive ? 'active' : '')}
-            >
-              Subscription
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/account-settings/communication"
-              className={({ isActive }) => (isActive ? 'active' : '')}
-            >
-              Communication Preferences
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/account-settings/privacy"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >

@@ -38,7 +38,7 @@ const TemplateManager = () => {
 
       {/* Main Content Area with Templates */}
       <div className="templates">
-        {[1, 2, 3, 4].map((template) => (
+        {[1, 2, 3].map((template) => (
           <div
             key={template}
             className="template"

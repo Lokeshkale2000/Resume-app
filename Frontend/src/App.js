@@ -15,8 +15,8 @@ import Createresume from "./Components/home/Createresume";
 import PrivacySettings from "./Components/pages/Account Setting/Privacy Setting/Privacy";
 //import Slidenavbar from './Sildenavbar/Slidenavbar';
 import GeneralAccountSettings from "./Components/pages/Account Setting/General Account/General";
-import Subscription from "./Components/pages/Account Setting/Subscription/Subscription";
-import CommunicationPreferences from "./Components/pages/Account Setting/Communication/Communication";
+//import Subscription from "./Components/pages/Account Setting/Subscription/Subscription";
+//import CommunicationPreferences from "./Components/pages/Account Setting/Communication/Communication";
 import ContactForm from "./Components/coverletter/ContactForm";
 import RecipientForm from "./Components/coverletter/RecipientForm";
 import Subject from "./Components/coverletter/Subject";
@@ -39,6 +39,7 @@ import SelectResumePage from "./pages/SelectResumePage";
 import UploadResumePage from "./pages/UploadResumePage";
 import ResumeBuilder from "./resume/ResumeBuilder";
 import Pricing from "./Components/home/Pricing";
+import Slidenavbar from "./Components/pages/Account Setting/Sildenavbar/Slidenavbar";
 
 function App() {
   const location = useLocation(); // Get the current route path
@@ -66,14 +67,7 @@ function App() {
           path="/account-settings/general"
           element={<GeneralAccountSettings />}
         />
-        <Route
-          path="/account-settings/subscription"
-          element={<Subscription />}
-        />
-        <Route
-          path="/account-settings/communication"
-          element={<CommunicationPreferences />}
-        />
+       
         <Route path="/account-settings/privacy" element={<PrivacySettings />} />
         <Route path="/cover-letter" element={<ContactForm />} />
         <Route path="/recipient-form" element={<RecipientForm />} />
@@ -98,6 +92,7 @@ function App() {
         <Route path="/upload-resume" element={<UploadResumePage />} />
         <Route path="/resume-editing" element={<ResumeBuilder />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/sidenavbr" element={<Slidenavbar/>} />
       </Routes>
     </>
   );
