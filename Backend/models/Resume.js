@@ -1,29 +1,32 @@
-const mongoose = require('mongoose');
+
+const mongoose = require("mongoose");
 
 const resumeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
   personalInfo: {
     name: String,
     email: String,
     phone: String,
-    // other personal fields
   },
   education: [
     {
-      degree: String,
       institution: String,
-      year: String,
+      degree: String,
+      startDate: Date,
+      endDate: Date,
     },
   ],
-  experience: [
+  workExperience: [
     {
-      title: String,
       company: String,
+      position: String,
+      startDate: Date,
+      endDate: Date,
       description: String,
-      duration: String,
     },
   ],
   skills: [String],
   summary: String,
 });
 
-module.exports = mongoose.model('Resume', resumeSchema);
+module.exports = mongoose.model("Resume", resumeSchema);

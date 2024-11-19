@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use("/api/resumes", resumeRoutes); // Handling resume-related routes
+app.use('/api/resumes', resumeRoutes); // Handling resume-related routes
 app.use("/api/coverLetters", coverLetterRoutes);  // Handling cover letter-related routes
 app.use("/api/pdf", pdfRoutes);
 app.use('/contacts', contactRoutes);
