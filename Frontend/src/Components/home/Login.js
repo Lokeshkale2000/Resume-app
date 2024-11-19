@@ -26,7 +26,7 @@ const Login = () => {
         console.log("Login successful", data);
         // Save the JWT token in localStorage or context/state
         localStorage.setItem("token", data.token);
-        navigate("/"); // Redirect to profile or homepage
+        navigate("/create-resume"); // Redirect to profile or homepage
       } else {
         setErrorMessage(data.message || "Invalid email or password.");
       }
