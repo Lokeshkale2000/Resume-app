@@ -103,7 +103,7 @@ const CoverletterTemp1 = () => {
           </div>
 
           <div className="other-sections">
-            <div className="subjects-section" style={{ marginTop: '140px', marginLeft: '-300px' }}>
+            <div className="subjects-section" style={{ marginTop: '140px', marginLeft: '60px' }}>
               {renderSection(
                 loadingState.subjects,
                 errorState.subjects,
@@ -133,7 +133,7 @@ const CoverletterTemp1 = () => {
                   <ul>
                     {recipients.map((recipient) => (
                       <li key={recipient._id}>
-                        <p style={{ fontSize: '15px', marginLeft: '-250px' }}>
+                        <p style={{ fontSize: '15px', marginLeft: '40px' }}>
                           <strong>Dear:</strong> <span>{recipient.firstName} {recipient.lastName}, Hiring Manager at {recipient.companyName}.</span>
                         </p>
                       </li>
@@ -183,7 +183,7 @@ const CoverletterTemp1 = () => {
             <div className="sincerely-section">
               <h3 style={{ marginLeft: '120px' }}>Sincerely,</h3>
               {contacts.length > 0 && (
-                <p style={{ marginLeft: '-310px' }}>{contacts[0].firstName} {contacts[0].lastName}</p>
+                <p style={{ marginLeft: '120px' }}>{contacts[0].firstName} {contacts[0].lastName}</p>
               )}
             </div>
           </div>
