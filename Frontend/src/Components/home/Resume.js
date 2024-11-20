@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import './Resume.css'; // CSS for styling
 
 const Resume = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/homepage"); // The path for the Resume page
+  };
   return (
     <div className="resume-container">
       <div className="resume-content">
@@ -19,7 +24,9 @@ const Resume = () => {
           alt="Resume preview" 
           className="resume-image" 
         />
-        <button className="resume-button">Create My Resume</button>
+        <button className="resume-button" onClick={handleNavigate}>
+      Create My Resume
+    </button>
       </div>
     </div>
   );

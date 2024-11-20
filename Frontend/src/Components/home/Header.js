@@ -4,23 +4,23 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
-  const [showToolsCard, setShowToolsCard] = useState(false);
+ 
   const [showResume, setShowResume] = useState(false);
   const [showCv, setShowCv] = useState(false);
   const [showLetter, setShowLetter] = useState(false);
   const [showBlog, setShowBlog] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
-  const navigate = useNavigate();
+ 
 
  
 
   const handleNavigate = (path) => {
     navigate(path);
   };
+  const navigate = useNavigate();
 
-  const toggleToolsCard = () => {
-    setShowToolsCard((prevState) => !prevState);
-  };
+
+
 
   const toggleResumeCard = () => {
     setShowResume((prevState) => !prevState);
@@ -59,37 +59,22 @@ const Header = () => {
                 <div className="tool-item">
                   <img src="coverletter.png" alt="Resume Builder" />
                   <div>
-                    <strong>Resume Builder</strong>
+                    <strong onClick={() => handleNavigate("/homepage")} >Resume Builder</strong>
                     <p>Create a resume in 5 minutes. Get the job you want.</p>
                   </div>
                 </div>
                 <hr />
-                <div className="tool-item">
-                  <img src="download (1).png" alt="Resume Checker" />
-                  <div>
-                    <strong>Resume Checker</strong>
-                    <p>Get your resume checked and scored with one click.</p>
-                  </div>
-                </div>
+               
                 <hr />
                 <div className="tool-item">
                   <img src="download (1).png" alt="CV Maker" />
                   <div>
-                    <strong>CV Maker</strong>
+                    <strong onClick={() => handleNavigate("/homepage")}>CV Maker</strong>
                     <p>Create a CV in 5 minutes. Get the job you want.</p>
                   </div>
                 </div>
                 <hr />
-                <div className="tool-item">
-                  <img src="download (1).png" alt="Cover Letter Builder" />
-                  <div>
-                    <strong>Cover Letter Builder</strong>
-                    <p>
-                      Write a cover letter that convinces employers you're the
-                      best.
-                    </p>
-                  </div>
-                </div>
+               
               </div>
             )}
           </div>

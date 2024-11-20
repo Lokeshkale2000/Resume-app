@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import './Createresume.css';
 
 const ResumeBuilder = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/resume"); // The path for the Resume page
+  };
   return (
     <>
       <div className="resume-builder-containerr">
@@ -14,9 +19,9 @@ const ResumeBuilder = () => {
             industry. Trusted by job seekers and HR experts. Build your resume
             quickly and easily today.
           </p>
-          <div>
-            <button type='button'>Create Your Resume Now</button>
-          </div>
+          <button type="button" onClick={handleNavigate}>
+        Create Your Resume Now
+      </button>
         </div>
         {/* Right Side - Image Section */}
         <div className="resume-image-container">
@@ -81,7 +86,9 @@ const ResumeBuilder = () => {
             </div>
           </div>
           <br />
-          <button type="button">Create Your Resume Now</button>
+          <button type="button" onClick={handleNavigate}>
+        Create Your Resume Now
+      </button>
         </div>
       </section>
     </>

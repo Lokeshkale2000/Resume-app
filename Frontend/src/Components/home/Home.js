@@ -220,7 +220,7 @@ const Home = () => {
             </div>
           </div>
           <br></br>
-          <button type="button">Create Your Resume Now</button>
+          <button type="button" onClick={handleResume}>Create Your Resume Now</button>
         </div>
         <ResumeFile></ResumeFile>
         <FAQ></FAQ>
