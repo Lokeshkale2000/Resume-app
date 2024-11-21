@@ -16,7 +16,7 @@ const Subject = ({ onBack }) => {
     const subjectData = { subjectName, title };
 
     try {
-      const response = await fetch('http://localhost:5000/subjects', {
+      const response = await fetch('https://zety-backend.onrender.com/subjects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

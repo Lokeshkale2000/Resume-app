@@ -31,7 +31,7 @@ const Opening = () => {
   // Add opening text via POST request
   const handleAdd = async () => {
     try {
-      const response = await fetch('http://localhost:5000/opening-text', { // Replace with your API endpoint
+      const response = await fetch('https://zety-backend.onrender.com/opening-text', { // Replace with your API endpoint
         method: 'POST',
   headers: {
     'Content-Type': 'application/json', // Make sure this header is present

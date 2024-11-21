@@ -9,11 +9,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  profile: {
-    name: { type: String },
-    bio: { type: String },
-  },
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);

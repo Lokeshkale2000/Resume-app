@@ -31,12 +31,12 @@ const Coverlettertemp4 = () => {
   const fetchData = async () => {
     try {
       const responses = await Promise.all([
-        axios.get('http://localhost:5000/contacts'),
-        axios.get('http://localhost:5000/recipient'),
-        axios.get('http://localhost:5000/subjects'),
-        axios.get('http://localhost:5000/opening-text'),
-        axios.get('http://localhost:5000/letters'),
-        axios.get('http://localhost:5000/conclusion'),
+        axios.get('https://zety-backend.onrender.com/contacts'),
+        axios.get('https://zety-backend.onrender.com/recipient'),
+        axios.get('https://zety-backend.onrender.com/subjects'),
+        axios.get('https://zety-backend.onrender.com/opening-text'),
+        axios.get('https://zety-backend.onrender.com/letters'),
+        axios.get('https://zety-backend.onrender.com/conclusion'),
       ]);
 
       setContacts(responses[0].data);

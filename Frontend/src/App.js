@@ -42,14 +42,14 @@ import Pricing from "./Components/home/Pricing";
 import Slidenavbar from "./Components/pages/Account Setting/Sildenavbar/Slidenavbar";
 
 function App() {
-  const location = useLocation(); // Get the current route path
+  const location = useLocation();
 
-  // Add '/forgot-password' to the list of routes where Header is hidden
+  
   const hideHeaderRoutes = ["/login", "/signup", "/resume", "/forgot-password"];
 
   return (
     <>
-      {/* Conditionally render Header based on the current path */}
+      
       {!hideHeaderRoutes.includes(location.pathname) && <Header />}
 
       <Routes>
@@ -67,14 +67,12 @@ function App() {
           path="/account-settings/general"
           element={<GeneralAccountSettings />}
         />
-       
         <Route path="/account-settings/privacy" element={<PrivacySettings />} />
         <Route path="/cover-letter" element={<ContactForm />} />
         <Route path="/recipient-form" element={<RecipientForm />} />
         <Route path="/subject" element={<Subject />} />
         <Route path="/letterbody-page" element={<Letterbody />} />
         <Route path="/opening-page" element={<Opening />} />
-
         <Route path="/closing-page" element={<Conclusion />} />
         <Route path="/payment" element={<PaymentUi />} />
         <Route path="/tempmanager" element={<TemplateManager />}></Route>

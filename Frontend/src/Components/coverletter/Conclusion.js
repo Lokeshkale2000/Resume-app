@@ -22,7 +22,7 @@ const Conclusion = () => {
 
   const createPost = async () => {
     try {
-      const response = await fetch('http://localhost:5000/conclusion', {
+      const response = await fetch('https://zety-backend.onrender.com/conclusion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

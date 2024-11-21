@@ -25,7 +25,7 @@ const Upload = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post(' http://localhost:5000/upload' , formData, {
+      const response = await axios.post(' https://zety-backend.onrender.com/upload' , formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

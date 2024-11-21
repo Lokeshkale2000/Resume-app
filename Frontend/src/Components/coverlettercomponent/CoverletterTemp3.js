@@ -38,12 +38,12 @@ const Coverlettertemp3 = () => {
     const fetchData = async () => {
       try {
         const [contactsRes, recipientsRes, subjectsRes, openingTextsRes, letterBodyRes, conclusionRes] = await Promise.all([
-          axios.get('http://localhost:5000/contacts'),
-          axios.get('http://localhost:5000/recipient'),
-          axios.get('http://localhost:5000/subjects'),
-          axios.get('http://localhost:5000/opening-text'),
-          axios.get('http://localhost:5000/letters'),
-          axios.get('http://localhost:5000/conclusion'),
+          axios.get('https://zety-backend.onrender.com/contacts'),
+          axios.get('https://zety-backend.onrender.com/recipient'),
+          axios.get('https://zety-backend.onrender.com/subjects'),
+          axios.get('https://zety-backend.onrender.com/opening-text'),
+          axios.get('https://zety-backend.onrender.com/letters'),
+          axios.get('https://zety-backend.onrender.com/conclusion'),
         ]);
 
         setContacts(contactsRes.data);
@@ -104,12 +104,12 @@ const Coverlettertemp3 = () => {
     // After downloading the PDF, delete data using multiple API calls
     try {
       await Promise.all([
-        axios.delete('http://localhost:5000/contacts'),
-        axios.delete('http://localhost:5000/recipient'),
-        axios.delete('http://localhost:5000/subjects'),
-        axios.delete('http://localhost:5000/opening-text'),
-        axios.delete('http://localhost:5000/letters'),
-        axios.delete('http://localhost:5000/conclusion')
+        axios.delete('https://zety-backend.onrender.com/contacts'),
+        axios.delete('https://zety-backend.onrender.com/recipient'),
+        axios.delete('https://zety-backend.onrender.com/subjects'),
+        axios.delete('https://zety-backend.onrender.com/opening-text'),
+        axios.delete('https://zety-backend.onrender.com/letters'),
+        axios.delete('https://zety-backend.onrender.com/conclusion')
       ]);
       console.log('Data deleted successfully.');
       

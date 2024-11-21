@@ -106,7 +106,7 @@ const Preview = ({ formData, onEdit }) => {
       console.log("Form data being sent to the backend:", formData);
 
       const response = await axios.post(
-        "http://localhost:5000/api/resumes",
+        "https://zety-backend.onrender.com/api/resumes",
         formData
       );
 
@@ -123,7 +123,7 @@ const Preview = ({ formData, onEdit }) => {
     }
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/resumes/${resumeId}`,
+        `https://zety-backend.onrender.com/api/resumes/${resumeId}`,
         formData
       );
       console.log("Resume updated successfully:", response.data);
@@ -139,7 +139,7 @@ const Preview = ({ formData, onEdit }) => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/api/resumes/${resumeId}`);
+      await axios.delete(`https://zety-backend.onrender.com/api/resumes/${resumeId}`);
       setResumeId(null); // Clear the resume ID after deletion
       console.log("Resume deleted successfully");
     } catch (error) {

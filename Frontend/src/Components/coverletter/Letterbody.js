@@ -36,7 +36,7 @@ const Letterbody = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/letters', { // Replace with your API endpoint
+      const response = await fetch('https://zety-backend.onrender.com/letters', { // Replace with your API endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -24,7 +24,7 @@ const RecipientForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/recipient', {
+      const response = await fetch('https://zety-backend.onrender.com/recipient', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

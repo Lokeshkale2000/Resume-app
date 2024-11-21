@@ -40,12 +40,12 @@ const CoverletterTemp1 = () => {
   };
 
   useEffect(() => {
-    fetchData('http://localhost:5000/contacts', setContacts, 'contacts', 'contacts');
-    fetchData('http://localhost:5000/recipient', setRecipients, 'recipients', 'recipients');
-    fetchData('http://localhost:5000/subjects', setSubjects, 'subjects', 'subjects');
-    fetchData('http://localhost:5000/opening-text', setOpeningTexts, 'openingTexts', 'openingTexts');
-    fetchData('http://localhost:5000/letters', (data) => setLetterBody(data[0].letterBodyText), 'letterBody', 'letterBody');
-    fetchData('http://localhost:5000/conclusion', (data) => setConclusion(data[0].conclusion), 'conclusion', 'conclusion');
+    fetchData('https://zety-backend.onrender.com/contacts', setContacts, 'contacts', 'contacts');
+    fetchData('https://zety-backend.onrender.com/recipient', setRecipients, 'recipients', 'recipients');
+    fetchData('https://zety-backend.onrender.com/subjects', setSubjects, 'subjects', 'subjects');
+    fetchData('https://zety-backend.onrender.com/opening-text', setOpeningTexts, 'openingTexts', 'openingTexts');
+    fetchData('https://zety-backend.onrender.com/letters', (data) => setLetterBody(data[0].letterBodyText), 'letterBody', 'letterBody');
+    fetchData('https://zety-backend.onrender.com/conclusion', (data) => setConclusion(data[0].conclusion), 'conclusion', 'conclusion');
   }, []);
 
   const renderSection = (loading, error, data, emptyMessage, renderContent) => {

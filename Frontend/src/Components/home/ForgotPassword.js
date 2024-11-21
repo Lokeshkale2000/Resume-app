@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       // Send OTP to the email using backend API
-      await axios.post('http://localhost:5000/send-otp', { email });
+      await axios.post('https://zety-backend.onrender.com/send-otp', { email });
 
       // Alert user about OTP sent and navigate to OTP page
       Swal.fire({
