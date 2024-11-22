@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
 import './CoverletterTemp1.css';
+import { useNavigate } from 'react-router-dom';
 
 const CoverletterTemp1 = () => {
   const [contacts, setContacts] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [openingTexts, setOpeningTexts] = useState([]);
   const [letterBody, setLetterBody] = useState([]);
   const [conclusion, setConclusion] = useState([]);
 
@@ -15,7 +15,6 @@ const CoverletterTemp1 = () => {
     contacts: true,
     recipients: true,
     subjects: true,
-    openingTexts: true,
     letterBody: true,
     conclusion: true,
   });
@@ -23,29 +22,53 @@ const CoverletterTemp1 = () => {
     contacts: null,
     recipients: null,
     subjects: null,
-    openingTexts: null,
     letterBody: null,
     conclusion: null,
+    global: null,
   });
 
-  const fetchData = async (url, setter, loadingKey, errorKey) => {
-    try {
-      const response = await axios.get(url);
-      setter(response.data);
-      setLoadingState((prev) => ({ ...prev, [loadingKey]: false }));
-    } catch (error) {
-      setErrorState((prev) => ({ ...prev, [errorKey]: 'Error fetching data' }));
-      setLoadingState((prev) => ({ ...prev, [loadingKey]: false }));
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData('https://zety-backend.onrender.com/contacts', setContacts, 'contacts', 'contacts');
-    fetchData('https://zety-backend.onrender.com/recipient', setRecipients, 'recipients', 'recipients');
-    fetchData('https://zety-backend.onrender.com/subjects', setSubjects, 'subjects', 'subjects');
-    fetchData('https://zety-backend.onrender.com/opening-text', setOpeningTexts, 'openingTexts', 'openingTexts');
-    fetchData('https://zety-backend.onrender.com/letters', (data) => setLetterBody(data[0].letterBodyText), 'letterBody', 'letterBody');
-    fetchData('https://zety-backend.onrender.com/conclusion', (data) => setConclusion(data[0].conclusion), 'conclusion', 'conclusion');
+    const fetchData = async () => {
+      try {
+        const [contactsRes, recipientsRes, subjectsRes, letterBodyRes, conclusionRes] = await Promise.all([
+          axios.get('https://zety-backend.onrender.com/contacts'),
+          axios.get('https://zety-backend.onrender.com/recipient'),
+          axios.get('https://zety-backend.onrender.com/subjects'),
+          axios.get('https://zety-backend.onrender.com/letters'),
+          axios.get('https://zety-backend.onrender.com/conclusion'),
+        ]);
+
+        setContacts(contactsRes.data);
+        setRecipients(recipientsRes.data);
+        setSubjects(subjectsRes.data);
+        setLetterBody(letterBodyRes.data[0]?.letterBodyText || '');
+        setConclusion(conclusionRes.data[0]?.conclusion || '');
+
+        setLoadingState({
+          contacts: false,
+          recipients: false,
+          subjects: false,
+          letterBody: false,
+          conclusion: false,
+        });
+      } catch (error) {
+        setErrorState((prevState) => ({
+          ...prevState,
+          global: error.message || 'Error fetching all data',
+        }));
+        setLoadingState({
+          contacts: false,
+          recipients: false,
+          subjects: false,
+          letterBody: false,
+          conclusion: false,
+        });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const renderSection = (loading, error, data, emptyMessage, renderContent) => {
@@ -55,19 +78,36 @@ const CoverletterTemp1 = () => {
     return renderContent();
   };
 
-  // Function to generate and download only the content inside contact-container as PDF
-  const downloadPDF = () => {
-    const element = document.querySelector('.contact-container'); // Capture only the .contact-container content
-    html2pdf()
-      .set({
-        margin: 0.5,
-        filename: 'CoverLetter.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-      })
-      .from(element)
-      .save();
+  const downloadPDF = async () => {
+    const element = document.getElementById('cover-letter-content');
+
+    const options = {
+      margin: 10,
+      filename: 'cover_letter.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 4 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+
+    // Generate PDF
+    html2pdf().from(element).set(options).save();
+
+    // After downloading the PDF, delete data using multiple API calls
+    try {
+      await Promise.all([
+        axios.delete('https://zety-backend.onrender.com/contacts'),
+        axios.delete('https://zety-backend.onrender.com/recipient'),
+        axios.delete('https://zety-backend.onrender.com/subjects'),
+        axios.delete('https://zety-backend.onrender.com/letters'),
+        axios.delete('https://zety-backend.onrender.com/conclusion'),
+      ]);
+      console.log('Data deleted successfully.');
+
+      // Redirect to a new page (for example, a "Success" or "Home" page)
+      navigate('/'); // Modify this route as needed
+    } catch (error) {
+      console.error('Error deleting data:', error.message);
+    }
   };
 
   return (
@@ -85,7 +125,7 @@ const CoverletterTemp1 = () => {
                   {contacts.map((contact) => (
                     <li key={contact._id}>
                       <h1>
-                        {contact.firstName} 
+                        {contact.firstName}
                       </h1>
                       <h1 className="Coverletter-contact-h2">{contact.lastName}</h1>
                       <div className="contact-details">
@@ -144,22 +184,6 @@ const CoverletterTemp1 = () => {
             </div>
 
             <div>
-              {renderSection(
-                loadingState.openingTexts,
-                errorState.openingTexts,
-                openingTexts,
-                'No opening texts available',
-                () => (
-                  <ul>
-                    {openingTexts.map((text) => (
-                      <li key={text._id} className="opening-texts-section">{text.openingText}</li>
-                    ))}
-                  </ul>
-                )
-              )}
-            </div>
-
-            <div>
               {loadingState.letterBody ? (
                 <div>Loading...</div>
               ) : errorState.letterBody ? (
@@ -190,8 +214,7 @@ const CoverletterTemp1 = () => {
         </div>
       </div>
 
-      {/* Button to download only the contact-container content as PDF */}
-      <button onClick={downloadPDF} style={{ margin: '20px 40%', padding: '10px 20px', fontSize: '16px',justifyContent:"center" }}>
+      <button onClick={downloadPDF} className="download-button" style={{ margin: '20px 40%', padding: '10px 20px', fontSize: '16px', justifyContent: 'center' }}>
         Download Cover Letter as PDF
       </button>
     </>
